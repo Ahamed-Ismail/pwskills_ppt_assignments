@@ -1,0 +1,298 @@
+
+Q1.Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order.
+
+Example:
+Input: nums = [2,7,11,15], target = 9
+Output0 [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1]
+
+class Solution {
+    public static int[] sum_index(int[] arr,int target){
+        int result[]=new int[2];
+        for (int i=0;i<arr.length-1;i++){
+            for(int j=i+1;j<arr.length;j++){
+                if(arr[i]+arr[j]==target){
+                    result[0]=i;
+                    result[j]=j;
+                }
+            }
+        }
+        return result;
+    }
+    public static void main(String[] args) {
+        int arr[]={2,7,11,15};
+        int result[]=sum_index(arr,9);
+        System.out.print(result[0]+","+result[1]);
+    }
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q2. Given an integer array nums and an integer val, remove all occurrences of val in nums in-place. The order of the elements may be changed. Then return the number of elements in nums which are not equal to val.
+
+Consider the number of elements in nums which are not equal to val be k, to get accepted, you need to do the following things:
+
+- Change the array nums such that the first k elements of nums contain the elements which are not equal to val. The remaining elements of nums are not important as well as the size of nums.
+- Return k.
+
+Example :
+Input: nums = [3,2,2,3], val = 3
+Output: 2, nums = [2,2,_,_]
+
+Explanation:Your function should return k = 2, with the first two elements of nums being 2. It does not matter what you leave beyond the returned k (hence they are underscores)[
+class Solution {
+    public static int removeElement(int[] nums, int val) {
+        int k=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]!=val){
+                nums[k]=nums[i];
+                k++;
+            }
+        }
+        return k;
+    }
+    public static void main(String args[]){
+        int arr[]={3,2,2,3};
+        int target=3;
+        int k=removeElement(arr,target);
+        System.out.println(k);
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q3. Given a sorted array of distinct integers and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.
+
+You must write an algorithm with O(log n) runtime complexity.
+
+Example 1:
+Input: nums = [1,3,5,6], target = 5
+
+Output: 2
+
+class Solution {
+    public static int findIndex(int[] nums, int val) {
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]==val || nums[i]>val) return i;
+        }
+        return nums.length;
+    }
+    public static void main(String args[]){
+        int arr[]={1,3,5,6};
+        int target=7;
+        int k=findIndex(arr,target);
+        System.out.println(k);
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Q4. You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.
+
+Increment the large integer by one and return the resulting array of digits.
+
+Example 1:
+Input: digits = [1,2,3]
+Output: [1,2,4]
+
+Explanation:The array represents the integer 123.
+
+Incrementing by one gives 123 + 1 = 124.
+Thus, the result should be [1,2,4].
+
+
+class Solution {
+    public static int[] plusOne(int[] digits) {
+        
+        for (int i=digits.length-1;i>=0;i--){
+            if(digits[i]<9){
+                digits[i]+=1;
+                break;
+            }
+            else{
+                digits[i]=0;
+            }
+        }
+        
+        if(digits[0]==0){
+            int newdigits[]=new int[digits.length+1];
+            newdigits[0]=1;
+            return newdigits;
+        }
+        return digits;
+    }
+    public static void main(String args[]){
+        int arr[]={9,9,9};
+        int result[]=plusOne(arr);
+        for (int i:result){
+            System.out.print(i);
+        }
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q5.You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+
+Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+
+The final sorted array should not be returned by the function, but instead be stored inside the array nums1. To accommodate this, nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n.
+
+Example 1:
+Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+Output: [1,2,2,3,5,6]
+
+Explanation:The arrays we are merging are [1,2,3] and [2,5,6].
+The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+
+class Solution {
+    public static void merge(int[] num1,int m,int []num2,int n) {
+        
+        int i=m-1,j=n-1,c=n+m-1;
+        
+        while(i>=0 && j>=0){
+            if(num1[i]>=num2[j]){
+                num1[c]=num1[i];
+                c--;
+                i--;
+            }
+            else{
+                num1[c]=num2[j];
+                c--;
+                j--;
+            }
+        }
+        while(j>=0){
+            num1[c]=num2[j];
+            c--;
+            j--;
+        }
+        while(i>=0){
+            num1[c]=num1[i];
+            c--;
+            i--;
+        }
+    }
+    public static void main(String args[]){
+        int num1[]={1,2,3,0,0,0};
+        int num2[]={2,5,6};
+        merge(num1,3,num2,3);
+        for (int i:num1){
+            System.out.print(i);
+        }
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q6. Given an integer array nums, return true if any value appears at least twice in the array, and return false if every element is distinct.
+
+Example 1:
+Input: nums = [1,2,3,1]
+
+Output: true
+
+import java.util.HashMap;
+
+class Solution {
+    public static boolean repeated(int[] nums) {
+        HashMap<Integer,Integer> h=new HashMap<>();
+        for(int i=0;i<nums.length;i++){
+            if(h.containsKey(nums[i])){
+                return true;
+            }
+            h.put(nums[i],1);
+        }
+        return false;
+        
+    }
+    public static void main(String args[]){
+        int nums[]={1,2,3,1};
+        System.out.print(repeated(nums));
+    }
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q7.Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the nonzero elements.
+
+Note that you must do this in-place without making a copy of the array.
+
+Example 1:
+Input: nums = [0,1,0,3,12]
+Output: [1,3,12,0,0]
+
+class Solution {
+    public static void moveZeroes(int[] nums) {
+        int c=0;
+        for(int i=0;i<nums.length;i++){
+            if(nums[i]!=0){
+                nums[c]=nums[i];
+                c++;
+            }
+        }
+        while(c<nums.length){
+            nums[c]=0;
+            c++;
+        }
+        
+    }
+    public static void main(String args[]){
+        int nums[]={0,1,0,3,12};
+        moveZeroes(nums);
+        for(int num:nums){
+            System.out.println(num);
+        }
+    }
+}
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q8. You have a set of integers s, which originally contains all the numbers from 1 to n. Unfortunately, due to some error, one of the numbers in s got duplicated to another number in the set, which results in repetition of one number and loss of another number.
+
+You are given an integer array nums representing the data status of this set after the error.
+
+Find the number that occurs twice and the number that is missing and return them in the form of an array.
+
+Example 1:
+Input: nums = [1,2,2,4]
+Output: [2,3]
+
+class Solution {
+    public static int[] findErrorNums(int[] nums) {
+        int ans[] = {-1,-1};
+        for(int i=0;i<nums.length;i++)
+        {
+            int curr=Math.abs(nums[i])-1;
+            if(nums[curr]<0)
+                ans[0] = curr + 1;
+            else
+                nums[curr] = nums[curr] * -1;
+        }
+        for(int i=0;i<nums.length;i++)
+        {
+            if(nums[i]>0)
+                ans[1] = i + 1;
+        }
+        return ans;
+    }
+    public static void main(String args[]){
+        int nums[]={1,2,2,4};
+        int result[]=findErrorNums(nums);
+        for(int num:result){
+            System.out.println(num);
+        }
+    }
+}
